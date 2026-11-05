@@ -78,6 +78,19 @@
   font-size: 14px;
 }
 
+.passwordForm {
+  display: grid;
+  gap: 8px;
+  max-width: 340px;
+}
+
+.passwordForm label > span {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .file {
   width: auto;
   max-width: 100%;

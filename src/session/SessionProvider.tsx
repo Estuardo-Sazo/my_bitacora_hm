@@ -50,6 +50,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const value = useMemo<SessionActions>(
     () => ({
       session,
+      signInWithPassword: async (email, password) => {
+        await (await loadSupabase()).signInWithPassword(email, password);
+      },
+      updatePassword: async (password) => {
+        await (await loadSupabase()).updatePassword(password);
+      },
       signInWithGoogle: async () => {
         await (await loadSupabase()).signInWithGoogle();
       },

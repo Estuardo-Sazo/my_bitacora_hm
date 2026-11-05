@@ -15,6 +15,8 @@ export type Session =
 
 export interface SessionActions {
   session: Session;
+  signInWithPassword: (email: string, password: string) => Promise<void>;
+  updatePassword: (password: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   sendEmailCode: (email: string) => Promise<void>;
   verifyEmailCode: (email: string, code: string) => Promise<void>;

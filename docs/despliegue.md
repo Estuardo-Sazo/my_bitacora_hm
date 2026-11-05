@@ -25,13 +25,8 @@ publicar `dist/`.
 2. Abre **SQL Editor**, pega el contenido de
    [`supabase/migrations/20261104000000_bitacora_schema.sql`](../supabase/migrations/20261104000000_bitacora_schema.sql)
    y ejecútalo.
-3. En **Authentication > Email Templates > Magic Link**, agrega el código a la plantilla para poder
-   entrar desde la app instalada:
-
-```html
-<p>Tu código es: <strong>{{ .Token }}</strong></p>
-```
-
+3. En **Authentication > Users**, usa **Add user > Create new user**. Escribe tu correo y una
+   contraseña, y activa **Auto Confirm User**. Así no dependes de ningún correo para entrar.
 4. En **Project Settings > API**, copia la URL del proyecto y la clave publicable.
 
 Las claves publicables pueden estar en el navegador: la protección está en las políticas de la
@@ -43,20 +38,34 @@ base. La clave `service_role` o secreta nunca debe ir en la app.
 2. Agrega las variables de `.env.example` en **Settings > Environment Variables**.
 3. Despliega y copia el dominio asignado.
 
-### 3. Autorizar el dominio y tu cuenta
+### 3. Autorizar tu cuenta y el dominio
 
-1. En **Authentication > URL Configuration**, pon tu dominio de Vercel en **Site URL** y agrégalo en
-   **Redirect URLs**. Agrega también `http://localhost:5173/` para desarrollo.
-2. Abre la app y entra con tu correo. Verás **Sin acceso** junto con tu ID, que es lo esperado.
-3. En **SQL Editor**, autoriza tu cuenta con ese ID:
+1. Abre la app y entra con tu correo y contraseña. Verás **Sin acceso** junto con tu ID, que es lo
+   esperado.
+2. En **SQL Editor**, autoriza tu cuenta con ese ID:
 
 ```sql
 insert into public.allowed_users (user_id) values ('TU_ID');
 ```
 
-4. Recarga la app.
-5. En **Authentication > Sign In / Providers**, desactiva **Allow new users to sign up** para que
+3. Recarga la app.
+4. En **Authentication > Sign In / Providers**, desactiva **Allow new users to sign up** para que
    nadie más cree cuentas.
+5. En **Authentication > URL Configuration**, pon tu dominio de Vercel en **Site URL** y agrégalo en
+   **Redirect URLs**.
+
+La sesión se conserva en cada dispositivo: solo vuelves a escribir la contraseña si cierras sesión.
+
+### Opcional: recuperar la contraseña
+
+Para que **Entrar con un código** funcione, agrega esto en
+**Authentication > Email Templates > Magic Link**:
+
+```html
+<p>Tu código es: <strong>{{ .Token }}</strong></p>
+```
+
+Después de entrar, cámbiala en **Ajustes > Cambiar contraseña**.
 
 ### 4. Primer uso
 
@@ -69,8 +78,7 @@ insert into public.allowed_users (user_id) values ('TU_ID');
 - **iPhone:** abre la app en Safari, toca **Compartir** y luego **Agregar a pantalla de inicio**.
 - **Android:** abre la app en Chrome y toca **Instalar app**.
 
-En iPhone, la app instalada no comparte sesión con Safari: inicia sesión dentro de ella con el
-código del correo.
+En iPhone, la app instalada no comparte sesión con Safari: inicia sesión una vez dentro de ella.
 
 ### Opcional: entrar con Google
 

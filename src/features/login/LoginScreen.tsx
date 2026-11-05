@@ -3,6 +3,7 @@ import { Notice } from '@/components/Notice';
 import { isGoogleEnabled, isSupabaseConfigured } from '@/data/supabaseConfig';
 import { useSession } from '@/session/sessionContext';
 import { EmailSignIn } from './EmailSignIn';
+import { PasswordSignIn } from './PasswordSignIn';
 import styles from './LoginScreen.module.css';
 
 const SAMPLE_NOTES = `1204 2h facturas
@@ -21,6 +22,7 @@ const SAMPLE_ROWS = [
 export function LoginScreen() {
   const { signInWithGoogle, enterDemo } = useSession();
   const [error, setError] = useState<string | null>(null);
+  const [useCode, setUseCode] = useState(false);
 
   const handleGoogle = () => {
     setError(null);
@@ -37,7 +39,20 @@ export function LoginScreen() {
           Escribe lo que hiciste como lo anotarías en un papel. La app calcula los horarios, agrega
           el Daily y genera el CSV listo para importar.
         </p>
-        {isSupabaseConfigured && <EmailSignIn />}
+        {isSupabaseConfigured && (
+          <>
+            {useCode ? <EmailSignIn /> : <PasswordSignIn />}
+            <button
+              type="button"
+              className={styles.switch}
+              onClick={() => {
+                setUseCode((value) => !value);
+              }}
+            >
+              {useCode ? 'Entrar con contraseña' : '¿Olvidaste tu contraseña? Entra con un código'}
+            </button>
+          </>
+        )}
         <div className={styles.actions}>
           {isSupabaseConfigured && isGoogleEnabled && (
             <button type="button" className="button" onClick={handleGoogle}>

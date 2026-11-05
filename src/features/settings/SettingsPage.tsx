@@ -6,6 +6,7 @@ import type { Settings } from '@/domain/types';
 import { useSession } from '@/session/sessionContext';
 import { useLogbook } from '@/state/logbookContext';
 import { ImportPanel } from './ImportPanel';
+import { PasswordPanel } from './PasswordPanel';
 import styles from './SettingsPage.module.css';
 
 const CLOCK_FIELDS = {
@@ -198,6 +199,8 @@ export function SettingsPage() {
       </form>
 
       <ImportPanel />
+
+      {session.status === 'ready' && <PasswordPanel />}
 
       <div className={styles.sessionActions}>
         <button

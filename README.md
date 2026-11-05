@@ -45,7 +45,7 @@ apoyo revisar correo que no llega
 - **Interfaz:** React 19, TypeScript estricto, Vite y PWA instalable.
 - **Datos:** Supabase (PostgreSQL) con capa propia local-first: funciona sin conexión y sincroniza
   al volver la señal.
-- **Acceso:** código por correo o Google, con Row Level Security y lista de cuentas autorizadas.
+- **Acceso:** correo y contraseña, con Row Level Security y lista de cuentas autorizadas.
 - **Calidad:** Vitest, Testing Library, Playwright en Chromium y WebKit, pruebas de seguridad sobre
   PostgreSQL real con PGlite, ESLint y GitHub Actions.
 - **Despliegue:** Vercel.

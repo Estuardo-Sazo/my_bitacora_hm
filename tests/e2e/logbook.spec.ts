@@ -29,11 +29,29 @@ test('boots with Supabase configured and offers sign-in', async ({ page }) => {
 
   await page.goto('http://localhost:4174/');
   await expect(page.getByLabel('Correo')).toBeEnabled();
+  await expect(page.getByLabel('Contraseña')).toBeEnabled();
   await expect(page.getByRole('button', { name: 'Entrar con Google' })).toBeVisible();
+
+  await page.getByRole('button', { name: /Olvidaste tu contraseña/ }).click();
+  await expect(page.getByRole('button', { name: 'Enviar código' })).toBeVisible();
+  await expect(page.getByLabel('Contraseña')).toBeHidden();
+  await page.getByRole('button', { name: 'Entrar con contraseña' }).click();
+  await expect(page.getByLabel('Contraseña')).toBeVisible();
   expect(errors).toEqual([]);
 
   await page.getByRole('button', { name: 'Probar la demo' }).click();
   await expect(page.getByRole('textbox', { name: 'Anota lo que hiciste' })).toBeVisible();
+});
+
+test('reports wrong credentials without leaving the login', async ({ page }) => {
+  await page.route('**/auth/v1/token**', (route) =>
+    route.fulfill({ status: 400, json: { error_code: 'invalid_credentials' } }),
+  );
+  await page.goto('http://localhost:4174/');
+  await page.getByLabel('Correo').fill('ana@example.test');
+  await page.getByLabel('Contraseña').fill('incorrecta');
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
+  await expect(page.getByText('Correo o contraseña incorrectos.')).toBeVisible();
 });
 
 test('never loads the Supabase SDK when it is not configured', async ({ page }) => {

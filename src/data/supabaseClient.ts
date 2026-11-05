@@ -79,6 +79,16 @@ export async function signInWithGoogle(): Promise<void> {
   if (error) throw error;
 }
 
+export async function signInWithPassword(email: string, password: string): Promise<void> {
+  const { error } = await client.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+}
+
+export async function updatePassword(password: string): Promise<void> {
+  const { error } = await client.auth.updateUser({ password });
+  if (error) throw error;
+}
+
 export async function sendEmailCode(email: string): Promise<void> {
   const { error } = await client.auth.signInWithOtp({
     email,

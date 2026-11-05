@@ -88,10 +88,12 @@ cuenta desconocida no lee nada ni escribe en la base de datos.
 Las políticas se prueban aplicando la migración real sobre PostgreSQL con PGlite, sin Docker ni
 servicios externos.
 
-### Código por correo
+### Correo y contraseña
 
-Un enlace abre el navegador de la app de correo, que no comparte sesión con la app instalada. Un
-código de 6 dígitos se escribe en la misma pantalla y funciona en cualquier contexto.
+La entrada principal es con contraseña porque no depende de recibir correos y funciona igual en la
+app instalada. La cuenta se crea desde el panel de Supabase, así que la app no expone registro
+público. La sesión se renueva sola en cada dispositivo. El código de 6 dígitos queda como
+recuperación: un enlace abriría el navegador de la app de correo, que no comparte sesión.
 
 ### `HashRouter` y base relativa
 

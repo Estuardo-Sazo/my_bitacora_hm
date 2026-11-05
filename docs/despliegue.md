@@ -42,8 +42,8 @@ base. La clave `service_role` o secreta nunca debe ir en la app.
 1. En el repositorio, ve a **Settings > General > Danger Zone** y hazlo público, o usa GitHub Pro para
    mantenerlo privado.
 2. En **Settings > Pages**, elige **GitHub Actions** en **Source**.
-3. En **Settings > Secrets and variables > Actions > Variables**, crea las variables de
-   `.env.example`. Usa la pestaña **Variables**, no **Secrets**: son valores públicos.
+3. En **Settings > Environments**, crea el entorno `Bitacora` y agrega ahí las variables de
+   `.env.example`. Usa **Environment variables**, no **Secrets**: son valores públicos.
 4. En **Actions**, abre **Deploy** y usa **Run workflow**. Después se publica con cada push a `main`.
 
 La app queda en `https://TU_USUARIO.github.io/NOMBRE_DEL_REPOSITORIO/`, en minúsculas el usuario.

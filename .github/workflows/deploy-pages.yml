@@ -19,6 +19,8 @@ jobs:
   build:
     name: Probar y compilar
     runs-on: ubuntu-latest
+    # The Supabase variables live in this GitHub environment.
+    environment: Bitacora
     env:
       VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
       VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
@@ -28,7 +30,7 @@ jobs:
       - name: Comprobar variables
         run: |
           if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_PUBLISHABLE_KEY" ]; then
-            echo "::error::Faltan variables. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_PUBLISHABLE_KEY en Settings > Secrets and variables > Actions > Variables."
+            echo "::error::Faltan variables. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_PUBLISHABLE_KEY al entorno Bitacora en Settings > Environments."
             exit 1
           fi
       - uses: actions/checkout@v4

@@ -11,6 +11,8 @@ export interface DayIssue {
   code: string;
   message: string;
   entryId: string | null;
+  /** The module this issue is about, so the UI can offer to add it to the catalog. */
+  module: string | null;
 }
 
 /** Errors block the export because the row would be wrong; warnings only ask for a second look. */
@@ -18,8 +20,14 @@ export function validateDay(day: DayLog, settings: Settings): DayIssue[] {
   if (day.dayType === 'off') return [];
 
   const issues: DayIssue[] = [];
-  const add = (severity: IssueSeverity, code: string, message: string, entryId: string | null) => {
-    issues.push({ severity, code, message, entryId });
+  const add = (
+    severity: IssueSeverity,
+    code: string,
+    message: string,
+    entryId: string | null,
+    module: string | null = null,
+  ) => {
+    issues.push({ severity, code, message, entryId, module });
   };
 
   const seenActivities = new Set<string>();
@@ -43,6 +51,7 @@ export function validateDay(day: DayLog, settings: Settings): DayIssue[] {
         'unknownModule',
         `${label}: “${entry.module}” no está en el catálogo de módulos.`,
         entry.id,
+        entry.module.trim(),
       );
     }
     if (entry.kind === 'ticket' && seenActivities.has(entry.activity)) {

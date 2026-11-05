@@ -168,6 +168,44 @@ test('adds an activity with the direct form and reorders it', async ({ page }) =
   await expect(page.getByRole('button', { name: 'Subir 1190' })).toBeDisabled();
 });
 
+test('uses default category and requester, and lets each activity change them', async ({
+  page,
+}) => {
+  await openDemoDay(page);
+  await page.getByRole('button', { name: 'Agregar actividad' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Agregar actividad' });
+  await expect(dialog.getByText('Programación · Ana Ejemplo')).toBeVisible();
+
+  await dialog.getByRole('textbox', { name: /^Ticket/ }).fill('7001');
+  await dialog.getByLabel('Tiempo').fill('8h');
+  await dialog.getByLabel(/Módulo/).fill('core');
+  await dialog.getByText('Programación · Ana Ejemplo').click();
+  await dialog.getByLabel('Solicitado por').fill('Otra Persona');
+  await dialog.getByRole('button', { name: 'Agregar', exact: true }).click();
+
+  await page.getByRole('button', { name: 'Más campos de 7001' }).click();
+  await expect(page.getByRole('textbox', { name: 'Solicitado por' })).toHaveValue('Otra Persona');
+  await expect(page.getByRole('textbox', { name: 'Categoría' })).toHaveValue('Programación');
+});
+
+test('adds a new module to the catalog in one step', async ({ page }) => {
+  await openDemoDay(page);
+  await page.getByRole('button', { name: 'Agregar actividad' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Agregar actividad' });
+  await dialog.getByRole('textbox', { name: /^Ticket/ }).fill('7001');
+  await dialog.getByLabel('Tiempo').fill('1h');
+  await dialog.getByLabel(/Módulo/).fill('Compras');
+  await dialog.getByRole('button', { name: 'Agregar', exact: true }).click();
+
+  const warning = page.getByText('“Compras” no está en el catálogo');
+  await expect(warning).toBeVisible();
+  await page.getByRole('button', { name: 'Agregar al catálogo' }).click();
+  await expect(warning).toBeHidden();
+
+  await capture(page, '7002 1h compras');
+  await expect(page.getByLabel('Módulo de 7002')).toHaveValue('Compras');
+});
+
 test('downloads a Windows-1252 CSV and marks the days as exported', async ({ page }) => {
   await openDemoDay(page);
   await capture(page, '1207 2h\n1190 3h\n1215 3h facturas');

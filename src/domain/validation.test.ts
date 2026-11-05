@@ -73,6 +73,16 @@ describe('validateDay', () => {
     expect(codes(day)).toEqual(expect.arrayContaining(['unknownModule', 'repeatedTicket']));
   });
 
+  it('names the unknown module so it can be added to the catalog', () => {
+    const day = testDay([], {
+      entries: [testEntry({ module: ' Compras ', durationMinutes: 480 })],
+    });
+    expect(validateDay(day, testSettings)[0]).toMatchObject({
+      code: 'unknownModule',
+      module: 'Compras',
+    });
+  });
+
   it('warns on weekends and expects half on half days', () => {
     expect(codes(testDay([8], { date: '2026-11-07' }))).toEqual(['weekend']);
     expect(codes(testDay([4], { dayType: 'half' }))).toEqual([]);

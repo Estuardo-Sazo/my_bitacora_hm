@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { buildManualEntry } from '@/domain/manualEntry';
+import { buildManualEntry, entryDefaults } from '@/domain/manualEntry';
 import type { ManualEntryField } from '@/domain/manualEntry';
 import type { EntryKind, WorkEntry } from '@/domain/types';
 import { useLogbook } from '@/state/logbookContext';
@@ -11,7 +11,14 @@ interface Props {
   onClose: () => void;
 }
 
-const EMPTY_FORM = { ticket: '', hours: '', module: '', description: '' };
+const EMPTY_FORM = {
+  ticket: '',
+  hours: '',
+  module: '',
+  description: '',
+  category: '',
+  requestedBy: '',
+};
 
 export function EntryDialog({ onAdd, onClose }: Props) {
   const { settings, ticketModules } = useLogbook();
@@ -21,6 +28,7 @@ export function EntryDialog({ onAdd, onClose }: Props) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<Record<ManualEntryField, string>>>({});
   const historyModule = kind === 'ticket' ? ticketModules.get(form.ticket.trim()) : undefined;
+  const defaults = entryDefaults(kind, settings);
 
   useEffect(() => {
     dialogRef.current?.showModal();
@@ -141,6 +149,37 @@ export function EntryDialog({ onAdd, onClose }: Props) {
             />
           </label>
         </div>
+
+        <details className={styles.more}>
+          <summary>
+            {form.category.trim() || defaults.category} ·{' '}
+            {form.requestedBy.trim() || defaults.requestedBy}
+          </summary>
+          <div className={styles.fields}>
+            <label>
+              <span>Categoría</span>
+              <input
+                autoComplete="off"
+                placeholder={defaults.category}
+                value={form.category}
+                onChange={(event) => {
+                  update('category', event.target.value);
+                }}
+              />
+            </label>
+            <label>
+              <span>Solicitado por</span>
+              <input
+                autoComplete="off"
+                placeholder={defaults.requestedBy}
+                value={form.requestedBy}
+                onChange={(event) => {
+                  update('requestedBy', event.target.value);
+                }}
+              />
+            </label>
+          </div>
+        </details>
 
         <div className={styles.actions}>
           <button type="button" className="button" onClick={onClose}>

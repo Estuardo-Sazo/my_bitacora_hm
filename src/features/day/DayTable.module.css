@@ -165,6 +165,17 @@
   color: var(--warn);
 }
 
+.issueAction {
+  margin-left: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .message {
   padding: 24px 0;
   color: var(--muted);
@@ -351,5 +362,11 @@
   .addButton {
     order: -1;
     width: 100%;
+  }
+
+  .issueAction {
+    display: block;
+    min-height: 44px;
+    margin-left: 0;
   }
 }

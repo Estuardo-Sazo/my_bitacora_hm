@@ -55,6 +55,15 @@ describe('buildManualEntry', () => {
     });
   });
 
+  it('uses a custom category and requester, and defaults when left blank', () => {
+    expect(build({ category: 'Soporte', requestedBy: 'Otra Persona' })).toMatchObject({
+      entry: { category: 'Soporte', requestedBy: 'Otra Persona' },
+    });
+    expect(build({ category: '  ', requestedBy: '' })).toMatchObject({
+      entry: { category: 'Programación', requestedBy: 'Ana Ejemplo' },
+    });
+  });
+
   it('explains every invalid field at once', () => {
     expect(build({ ticket: 'abc', hours: 'mucho', module: '' })).toEqual({
       ok: false,

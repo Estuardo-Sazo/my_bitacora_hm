@@ -9,6 +9,9 @@ export interface ManualEntryInput {
   hours: string;
   module: string;
   description: string;
+  /** Blank means the default for this kind of activity. */
+  category?: string;
+  requestedBy?: string;
 }
 
 export type ManualEntryField = 'ticket' | 'hours' | 'module';
@@ -23,6 +26,13 @@ interface Context {
 }
 
 const MEETING_LABEL = 'Reunion';
+
+/** Category and requester an activity gets unless the user changes them. */
+export function entryDefaults(kind: EntryKind, settings: Settings) {
+  return kind === 'meeting'
+    ? { category: MEETING_LABEL, requestedBy: settings.daily.requestedBy }
+    : { category: settings.defaultCategory, requestedBy: settings.defaultRequestedBy };
+}
 
 /** Builds an entry from the direct form, applying the same defaults as the quick notes. */
 export function buildManualEntry(input: ManualEntryInput, context: Context): ManualEntryResult {
@@ -48,7 +58,7 @@ export function buildManualEntry(input: ManualEntryInput, context: Context): Man
 
   if (durationMinutes === null || Object.keys(errors).length > 0) return { ok: false, errors };
 
-  const isMeeting = input.kind === 'meeting';
+  const defaults = entryDefaults(input.kind, settings);
   const activities: Record<EntryKind, string> = {
     ticket,
     noPlan: settings.noPlanLabel,
@@ -62,8 +72,8 @@ export function buildManualEntry(input: ManualEntryInput, context: Context): Man
       kind: input.kind,
       activity: activities[input.kind],
       module: resolvedModule,
-      category: isMeeting ? MEETING_LABEL : settings.defaultCategory,
-      requestedBy: isMeeting ? settings.daily.requestedBy : settings.defaultRequestedBy,
+      category: input.category?.trim() || defaults.category,
+      requestedBy: input.requestedBy?.trim() || defaults.requestedBy,
       durationMinutes,
       fixedStartMinutes: null,
       note: input.description.trim(),

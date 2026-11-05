@@ -41,6 +41,21 @@
   font-style: normal;
 }
 
+.more {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.more summary {
+  padding: 4px 0;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.more .fields {
+  margin-top: 6px;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

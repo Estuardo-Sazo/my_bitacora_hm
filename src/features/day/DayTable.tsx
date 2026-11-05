@@ -181,7 +181,7 @@ function EntryRow({ index, entry, row, hasError, isLast, onChange, onMove, onRem
 }
 
 export function DayTable({ day }: { day: DayLog }) {
-  const { settings, saveDay } = useLogbook();
+  const { settings, saveDay, saveSettings } = useLogbook();
   const [adding, setAdding] = useState(false);
 
   if (day.dayType === 'off') {
@@ -296,6 +296,18 @@ export function DayTable({ day }: { day: DayLog }) {
                 className={issue.severity === 'error' ? styles.issueError : styles.issueWarning}
               >
                 {issue.message}
+                {issue.module !== null && (
+                  <button
+                    type="button"
+                    className={styles.issueAction}
+                    onClick={() => {
+                      const modules = [...settings.modules, issue.module ?? ''];
+                      void saveSettings({ ...settings, modules });
+                    }}
+                  >
+                    Agregar al catálogo
+                  </button>
+                )}
               </li>
             ))}
           </ul>

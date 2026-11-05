@@ -1,0 +1,43 @@
+.panel {
+  padding-top: 8px;
+  border-top: 1px solid var(--grid);
+}
+
+.list {
+  margin-top: 4px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 2px;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 13px;
+}
+
+.date {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.action {
+  padding: 2px 4px;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .item {
+    font-size: 14px;
+  }
+
+  .action {
+    min-height: 44px;
+    padding: 0 8px;
+  }
+}

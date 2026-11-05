@@ -1,0 +1,122 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.month {
+  font-weight: 600;
+}
+
+.month::first-letter {
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--grid);
+  border-left: 1px solid var(--grid);
+}
+
+.weekday,
+.day {
+  border-right: 1px solid var(--grid);
+  border-bottom: 1px solid var(--grid);
+  text-align: center;
+}
+
+.weekday {
+  background: var(--header);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 20px;
+}
+
+.day {
+  position: relative;
+  height: 28px;
+  background: var(--bg);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 27px;
+  text-decoration: none;
+}
+
+.day:hover {
+  background: var(--header);
+}
+
+.outside {
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+.draft {
+  box-shadow: inset 0 -3px var(--grid-strong);
+}
+
+.modified {
+  box-shadow: inset 0 -3px var(--warn);
+}
+
+.exported {
+  box-shadow: inset 0 -3px var(--accent);
+}
+
+.off {
+  background: var(--header);
+  color: var(--muted);
+}
+
+.today {
+  font-weight: 700;
+}
+
+.hasDraft::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  background: #d9a400;
+}
+
+.selected,
+.selected:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: none;
+}
+
+.legend {
+  display: grid;
+  gap: 1px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.legend li::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 3px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+
+.legendDraft::before {
+  background: var(--grid-strong);
+}
+
+.legendExported::before {
+  background: var(--accent);
+}
+
+.legendNotes::before {
+  height: 5px;
+  background: #d9a400;
+}

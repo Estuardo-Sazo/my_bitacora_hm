@@ -1,0 +1,15 @@
+.notice {
+  font-size: 13px;
+}
+
+.error {
+  color: var(--danger);
+}
+
+.warning {
+  color: var(--warn);
+}
+
+.success {
+  color: var(--ok);
+}

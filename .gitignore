@@ -1,0 +1,20 @@
+node_modules
+dist
+dev-dist
+coverage
+playwright-report
+test-results
+.vercel
+.firebase
+*.log
+
+# Local configuration and real data must never reach the public repository.
+.env
+.env.local
+.env.*.local
+private/
+*.xlsm
+*.xlsx
+Bitacora_*.csv
+dist-supabase
+.claude/

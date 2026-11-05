@@ -1,0 +1,91 @@
+.page {
+  display: grid;
+  gap: 28px;
+  max-width: 620px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 11vh 20px 32px;
+  align-content: start;
+}
+
+.title {
+  margin-bottom: 6px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.lead {
+  max-width: 56ch;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.form {
+  display: grid;
+  gap: 6px;
+  max-width: 340px;
+  margin-top: 16px;
+}
+
+.form label > span {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 13px;
+}
+
+.form .actions {
+  margin: 4px 0 0;
+}
+
+.hint {
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sample {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 16px;
+}
+
+.notes {
+  margin: 4px 0 0;
+  padding: 7px 8px;
+  border: 1px solid var(--grid);
+  background: var(--panel);
+  font-size: 12px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.rows {
+  margin-top: 4px;
+  border-top: 1px solid var(--grid);
+  border-left: 1px solid var(--grid);
+  font-size: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+}
+
+.row > span {
+  padding: 2px 6px;
+  border-right: 1px solid var(--grid);
+  border-bottom: 1px solid var(--grid);
+}
+
+@media (max-width: 560px) {
+  .sample {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

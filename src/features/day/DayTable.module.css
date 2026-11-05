@@ -1,0 +1,355 @@
+.scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table th,
+.table td {
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--grid);
+}
+
+.table th {
+  padding: 3px 7px;
+  background: var(--header);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.colTime {
+  width: 104px;
+}
+
+.colActivity {
+  width: 108px;
+}
+
+.colModule {
+  width: 124px;
+}
+
+.colHours {
+  width: 62px;
+}
+
+.colActions {
+  width: 112px;
+}
+
+.table th.rowNumber,
+.table td.rowNumber {
+  width: 30px;
+  background: var(--header);
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.table td.time {
+  padding: 0 7px;
+  white-space: nowrap;
+}
+
+.table td.plain {
+  padding: 0 7px;
+}
+
+/* Cells read as a sheet: the input fills the cell and focus draws the selection box. */
+.table td input {
+  display: block;
+  height: 29px;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.table td:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.table td input:focus-visible {
+  outline: 0;
+}
+
+.table td input[aria-invalid='true'] {
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+
+.hours {
+  text-align: right;
+}
+
+.table td.actions {
+  padding: 0 2px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.table td.actions:focus-within {
+  outline: 0;
+}
+
+.rowError td.rowNumber {
+  background: var(--danger);
+  color: var(--bg);
+}
+
+.autoRow td {
+  background: var(--panel);
+  color: var(--muted);
+}
+
+.lunchRow td,
+.table .lunchRow td.rowNumber {
+  height: 22px;
+  background: var(--lunch);
+  color: var(--on-lunch);
+  font-size: 12px;
+}
+
+.detailRow td {
+  background: var(--panel);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.table .details input {
+  height: 30px;
+  border: 1px solid var(--grid-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-size: 14px;
+}
+
+.table td:has(.details):focus-within {
+  outline: 0;
+}
+
+.below {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.issues {
+  display: grid;
+  flex: 1;
+  min-width: 220px;
+  font-size: 13px;
+}
+
+.issueError {
+  color: var(--danger);
+}
+
+.issueWarning {
+  color: var(--warn);
+}
+
+.message {
+  padding: 24px 0;
+  color: var(--muted);
+}
+
+/* On phones each activity becomes a card sized for thumbs. */
+@media (max-width: 640px) {
+  .scroll {
+    overflow: visible;
+  }
+
+  .table {
+    display: block;
+    min-width: 0;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody {
+    display: grid;
+    gap: 8px;
+  }
+
+  .table td,
+  .table td.rowNumber {
+    height: auto;
+    border: 0;
+    background: transparent;
+  }
+
+  .table td.rowNumber {
+    display: none;
+  }
+
+  .table td:focus-within {
+    outline: 0;
+  }
+
+  .autoRow,
+  .lunchRow {
+    display: flex;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    background: var(--panel);
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .lunchRow {
+    padding: 4px 10px;
+    background: var(--lunch);
+    color: var(--on-lunch);
+  }
+
+  .autoRow td,
+  .lunchRow td {
+    display: block;
+    height: auto;
+    background: transparent;
+  }
+
+  .table .lunchRow td,
+  .table .autoRow td {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  .entryRow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 84px;
+    grid-template-areas:
+      'time actions actions'
+      'activity activity hours'
+      'module module module'
+      'note note note';
+    gap: 6px;
+    padding: 6px 10px 10px;
+    border: 1px solid var(--grid);
+    border-radius: var(--radius);
+  }
+
+  .rowError {
+    border-color: var(--danger);
+  }
+
+  .entryRow td:nth-child(2) {
+    grid-area: time;
+    align-self: center;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .entryRow td:nth-child(3) {
+    grid-area: activity;
+  }
+
+  .entryRow td:nth-child(4) {
+    grid-area: module;
+  }
+
+  .entryRow td:nth-child(5) {
+    grid-area: hours;
+  }
+
+  .entryRow td:nth-child(6) {
+    grid-area: note;
+  }
+
+  .entryRow td:nth-child(7) {
+    grid-area: actions;
+  }
+
+  .entryRow td,
+  .table td.actions {
+    display: block;
+    padding: 0;
+    text-align: left;
+  }
+
+  .table td.actions {
+    display: flex;
+    justify-content: end;
+    white-space: normal;
+  }
+
+  .table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .table td input {
+    height: 44px;
+    border: 1px solid var(--grid-strong);
+    border-radius: var(--radius);
+    background: var(--bg);
+  }
+
+  .table td input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+  }
+
+  .hours {
+    text-align: left;
+  }
+
+  .detailRow {
+    display: block;
+    border-radius: var(--radius);
+  }
+
+  .detailRow td {
+    display: block;
+    height: auto;
+  }
+
+  .details {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .table .details input {
+    height: 44px;
+    font-size: 16px;
+  }
+
+  /* The button moves above the cards so it stays close however long the day gets. */
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .below {
+    display: contents;
+  }
+
+  .addButton {
+    order: -1;
+    width: 100%;
+  }
+}

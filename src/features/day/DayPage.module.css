@@ -1,0 +1,29 @@
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 18px;
+  align-items: start;
+}
+
+.sheet {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.notes {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+@media (max-width: 1120px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet,
+  .notes {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

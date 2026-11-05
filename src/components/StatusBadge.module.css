@@ -1,0 +1,18 @@
+.badge {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.empty,
+.off,
+.draft {
+  color: var(--muted);
+}
+
+.exported {
+  color: var(--ok);
+}
+
+.modified {
+  color: var(--warn);
+}

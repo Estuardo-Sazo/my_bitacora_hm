@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  // Relative base + HashRouter keep the build host-agnostic (Vercel or GitHub Pages).
+  // Relative base + HashRouter keep the build host-agnostic (GitHub Pages serves it from a subpath).
   base: './',
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },

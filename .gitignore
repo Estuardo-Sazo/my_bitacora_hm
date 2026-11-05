@@ -4,7 +4,6 @@ dev-dist
 coverage
 playwright-report
 test-results
-.vercel
 .firebase
 *.log
 

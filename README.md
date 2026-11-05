@@ -48,7 +48,7 @@ apoyo revisar correo que no llega
 - **Acceso:** correo y contraseña, con Row Level Security y lista de cuentas autorizadas.
 - **Calidad:** Vitest, Testing Library, Playwright en Chromium y WebKit, pruebas de seguridad sobre
   PostgreSQL real con PGlite, ESLint y GitHub Actions.
-- **Despliegue:** Vercel.
+- **Despliegue:** GitHub Pages con GitHub Actions.
 
 La lógica de negocio vive en [`src/domain`](src/domain), sin dependencias de React ni Supabase. Las
 decisiones están en [docs/arquitectura.md](docs/arquitectura.md).

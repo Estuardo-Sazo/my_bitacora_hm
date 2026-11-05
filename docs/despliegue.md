@@ -2,19 +2,24 @@
 
 ## Dónde publicarla
 
-| Criterio                   | Vercel        | GitHub Pages           |
-| -------------------------- | ------------- | ---------------------- |
-| Despliegue al hacer push   | Automático    | Requiere workflow      |
-| Vista previa por PR        | Incluida      | No incluida            |
-| Variables de entorno       | Panel propio  | Secrets en el workflow |
-| Encabezados de seguridad   | `vercel.json` | No configurables       |
-| Repositorio privado gratis | Sí            | No                     |
+| Criterio                   | GitHub Pages            | Vercel           |
+| -------------------------- | ----------------------- | ---------------- |
+| Herramientas adicionales   | Ninguna, todo en GitHub | Una cuenta más   |
+| Despliegue al hacer push   | Con workflow            | Automático       |
+| Repositorio privado gratis | No, requiere GitHub Pro | Sí               |
+| Encabezados de seguridad   | No configurables        | Configurables    |
+| Sitio privado              | Solo Enterprise Cloud   | Con plan de pago |
 
-**Decisión: Vercel.** Las vistas previas por PR y los encabezados de seguridad aportan más al flujo
-de trabajo y al portafolio. El plan gratuito de Vercel es para uso personal y no comercial.
+**Decisión: GitHub Pages.** Es una herramienta interna y sencilla, y así todo queda en un solo lugar.
 
-La app no queda atada a Vercel: es un sitio estático con rutas por hash, y para migrar basta con
-publicar `dist/`.
+Consideraciones aceptadas:
+
+- El sitio es accesible en internet. Lo que protege los datos es el login y las políticas de la base.
+- GitHub indica que Pages no debería usarse para operaciones sensibles como enviar contraseñas. Aquí
+  la contraseña va directo de tu navegador a Supabase por HTTPS y nunca pasa por el servidor de Pages,
+  pero la página que la solicita sí se sirve desde Pages.
+- La app no queda atada a Pages: es un sitio estático con rutas por hash, y para migrar basta con
+  publicar `dist/`.
 
 ## Pasos
 
@@ -32,11 +37,16 @@ publicar `dist/`.
 Las claves publicables pueden estar en el navegador: la protección está en las políticas de la
 base. La clave `service_role` o secreta nunca debe ir en la app.
 
-### 2. Vercel
+### 2. GitHub Pages
 
-1. Importa el repositorio de GitHub en [Vercel](https://vercel.com/new).
-2. Agrega las variables de `.env.example` en **Settings > Environment Variables**.
-3. Despliega y copia el dominio asignado.
+1. En el repositorio, ve a **Settings > General > Danger Zone** y hazlo público, o usa GitHub Pro para
+   mantenerlo privado.
+2. En **Settings > Pages**, elige **GitHub Actions** en **Source**.
+3. En **Settings > Secrets and variables > Actions > Variables**, crea las variables de
+   `.env.example`. Usa la pestaña **Variables**, no **Secrets**: son valores públicos.
+4. En **Actions**, abre **Deploy** y usa **Run workflow**. Después se publica con cada push a `main`.
+
+La app queda en `https://TU_USUARIO.github.io/NOMBRE_DEL_REPOSITORIO/`, en minúsculas el usuario.
 
 ### 3. Autorizar tu cuenta y el dominio
 
@@ -51,8 +61,8 @@ insert into public.allowed_users (user_id) values ('TU_ID');
 3. Recarga la app.
 4. En **Authentication > Sign In / Providers**, desactiva **Allow new users to sign up** para que
    nadie más cree cuentas.
-5. En **Authentication > URL Configuration**, pon tu dominio de Vercel en **Site URL** y agrégalo en
-   **Redirect URLs**.
+5. En **Authentication > URL Configuration**, pon la dirección de la app en **Site URL** y agrégala
+   en **Redirect URLs**.
 
 La sesión se conserva en cada dispositivo: solo vuelves a escribir la contraseña si cierras sesión.
 
@@ -86,7 +96,7 @@ En iPhone, la app instalada no comparte sesión con Safari: inicia sesión una v
 2. Agrega como URI de redireccionamiento la que indica Supabase en
    **Authentication > Sign In / Providers > Google**.
 3. Pega el ID y el secreto del cliente en Supabase y activa el proveedor.
-4. Cambia `VITE_AUTH_GOOGLE` a `true` en Vercel y vuelve a desplegar.
+4. Cambia la variable `VITE_AUTH_GOOGLE` a `true` en GitHub y vuelve a ejecutar **Deploy**.
 
 ## Límites del plan gratuito
 

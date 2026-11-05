@@ -97,7 +97,8 @@ recuperación: un enlace abriría el navegador de la app de correo, que no compa
 
 ### `HashRouter` y base relativa
 
-El build no depende de la ruta ni del hosting, y funciona igual en Vercel o GitHub Pages.
+El build no depende de la ruta ni del hosting. Por eso funciona dentro de la subruta de GitHub Pages
+sin configuración adicional.
 
 ## Limitaciones conocidas
 
